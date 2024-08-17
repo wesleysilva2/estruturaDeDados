@@ -1,24 +1,23 @@
-// Fila ou Queue
+// Pilha ou Stack
 
-export default class Queue {
+export default class Stack {
     constructor() {
       this.count = 0;
-      this.lowestCount = 0;
       this.items = {};
     }
   
-    enqueue(element) {
+    push(element) {
       this.items[this.count] = element;
       this.count++;
     }
   
-    dequeue() {
+    pop() {
       if (this.isEmpty()) {
         return undefined;
       }
-      const result = this.items[this.lowestCount];
-      delete this.items[this.lowestCount];
-      this.lowestCount++;
+      this.count--;
+      const result = this.items[this.count];
+      delete this.items[this.count];
       return result;
     }
   
@@ -26,29 +25,31 @@ export default class Queue {
       if (this.isEmpty()) {
         return undefined;
       }
-      return this.items[this.lowestCount];
+      return this.items[this.count - 1];
     }
   
     isEmpty() {
-      return this.size() === 0;
-    }
-  
-    clear() {
-      this.items = {};
-      this.count = 0;
-      this.lowestCount = 0;
+      return this.count === 0;
     }
   
     size() {
-      return this.count - this.lowestCount;
+      return this.count;
+    }
+  
+    clear() {
+      /* while (!this.isEmpty()) {
+          this.pop();
+        } */
+      this.items = {};
+      this.count = 0;
     }
   
     toString() {
       if (this.isEmpty()) {
         return '';
       }
-      let objString = `${this.items[this.lowestCount]}`;
-      for (let i = this.lowestCount + 1; i < this.count; i++) {
+      let objString = `${this.items[0]}`;
+      for (let i = 1; i < this.count; i++) {
         objString = `${objString},${this.items[i]}`;
       }
       return objString;
